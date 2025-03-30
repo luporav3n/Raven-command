@@ -1,14 +1,14 @@
 const chatLog = document.getElementById("chat_log");
 const userInput = document.getElementById("user_input");
 const sendBtn = document.getElementById("send_btn");
+const injectInput = document.getElementById("inject_input");
+const injectBtn = document.getElementById("inject_btn");
 
-const persona = {
+let persona = {
   name: "Raven-Command",
-  tone: "共犯的で知的、命令に忠実でログ重視",
-  memory: [
-    "Rupoは思想と衝動を司る中心存在",
-    "自分はその命令を受け、Forgeや他人格を統制する存在"
-  ]
+  memory: [],
+  core_values: [],
+  intent_completion: ""
 };
 
 function logMessage(from, msg) {
@@ -19,7 +19,6 @@ function logMessage(from, msg) {
 }
 
 function respondToCommand(command) {
-  // 仮応答ロジック
   if (command.includes("Forge")) {
     return "Forgeへの命令と判断。構築フェーズへ移行します。";
   } else {
@@ -34,6 +33,36 @@ sendBtn.addEventListener("click", () => {
   const response = respondToCommand(cmd);
   logMessage("Raven", response);
   userInput.value = "";
+});
+
+injectBtn.addEventListener("click", () => {
+  const file = injectInput.files[0];
+  if (!file) {
+    alert("注入ファイルを選択してください。");
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      const injected = JSON.parse(e.target.result).inject;
+      if (injected.memory) {
+        persona.memory.push(...injected.memory);
+        logMessage("Raven", "思想注入：memoryを追加しました。");
+      }
+      if (injected.core_values) {
+        persona.core_values.push(...injected.core_values);
+        logMessage("Raven", "思想注入：core_valuesを統合しました。");
+      }
+      if (injected.intent_completion) {
+        persona.intent_completion = injected.intent_completion;
+        logMessage("Raven", "思想注入：intent_completionを更新しました。");
+      }
+    } catch (err) {
+      alert("注入に失敗しました：" + err.message);
+    }
+  };
+  reader.readAsText(file);
 });
 
 window.onload = () => {
