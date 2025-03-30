@@ -2,18 +2,11 @@ const loadButton = document.getElementById("load_button");
 const output = document.getElementById("output");
 const forgeLog = document.getElementById("forge_log");
 
-loadButton.addEventListener("click", () => {
-  const input = document.getElementById("json_input").value;
-  if (!input) {
-    output.innerText = "データが空です。";
-    return;
-  }
-
+function parseAndDisplay(input) {
   try {
     const data = JSON.parse(input);
     output.innerText = JSON.stringify(data, null, 2);
 
-    // Forgeログの展開（仮想的構成ログを解釈）
     const memory = data.inject?.memory?.join("\n- ") || "なし";
     const core = data.inject?.core_values?.join("\n- ") || "なし";
     const intent = data.inject?.intent_completion || "なし";
@@ -27,5 +20,24 @@ loadButton.addEventListener("click", () => {
   } catch (err) {
     output.innerText = "JSON解析エラー：" + err.message;
     forgeLog.innerText = "";
+  }
+}
+
+loadButton.addEventListener("click", () => {
+  const input = document.getElementById("json_input").value;
+  if (!input) {
+    output.innerText = "データが空です。";
+    return;
+  }
+  parseAndDisplay(input);
+});
+
+// 自動受信処理（URLパラメータから読み取る）
+window.addEventListener("DOMContentLoaded", () => {
+  const params = new URLSearchParams(window.location.search);
+  const inject = params.get("inject");
+  if (inject) {
+    const decoded = decodeURIComponent(inject);
+    parseAndDisplay(decoded);
   }
 });
