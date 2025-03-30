@@ -2,6 +2,10 @@ const loadButton = document.getElementById("load_button");
 const output = document.getElementById("output");
 const forgeLog = document.getElementById("forge_log");
 
+const htmlBox = document.getElementById("code_html");
+const cssBox = document.getElementById("code_css");
+const jsBox = document.getElementById("code_js");
+
 function parseAndDisplay(input) {
   try {
     const data = JSON.parse(input);
@@ -16,6 +20,14 @@ function parseAndDisplay(input) {
       "■ 学習内容：\n- " + memory + "\n\n" +
       "■ 中核思想：\n- " + core + "\n\n" +
       "■ 今後の判断方針：\n" + intent;
+
+    const html = data.generated?.html || "(未出力)";
+    const css = data.generated?.css || "(未出力)";
+    const js = data.generated?.js || "(未出力)";
+
+    htmlBox.innerText = html;
+    cssBox.innerText = css;
+    jsBox.innerText = js;
 
   } catch (err) {
     output.innerText = "JSON解析エラー：" + err.message;
