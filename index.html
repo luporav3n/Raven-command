@@ -3,19 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Raven│Command v1.1</title>
+  <title>Raven│Command v1.2</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <h1>Raven│Command</h1>
-  <div id="chat_log"></div>
-  <textarea id="user_input" placeholder="司令を入力..."></textarea>
-  <button id="send_btn">送信</button>
+
+  <textarea id="json_input" placeholder="ここに進化JSONまたは構築ログを貼り付けてください"></textarea>
+  <button id="load_button">読み込む</button>
+
+  <h3>展開結果</h3>
+  <pre id="output"></pre>
 
   <hr />
-  <label>思想注入ファイルを選択:</label>
-  <input type="file" id="inject_input" />
-  <button id="inject_btn">注入</button>
+  <h3>Forge構築ログ（受信パネル）</h3>
+  <pre id="forge_log"></pre>
 
   <script src="main.js"></script>
 </body>
