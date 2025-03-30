@@ -6,6 +6,15 @@ const htmlBox = document.getElementById("code_html");
 const cssBox = document.getElementById("code_css");
 const jsBox = document.getElementById("code_js");
 
+const scriptBox = document.getElementById("replace_script");
+const genScriptBtn = document.getElementById("generate_script");
+
+let latestFiles = {
+  html: "",
+  css: "",
+  js: ""
+};
+
 function parseAndDisplay(input) {
   try {
     const data = JSON.parse(input);
@@ -28,6 +37,9 @@ function parseAndDisplay(input) {
     htmlBox.innerText = html;
     cssBox.innerText = css;
     jsBox.innerText = js;
+
+    latestFiles = { html, css, js };
+    scriptBox.innerText = "";
 
   } catch (err) {
     output.innerText = "JSON解析エラー：" + err.message;
@@ -52,4 +64,26 @@ window.addEventListener("DOMContentLoaded", () => {
     const decoded = decodeURIComponent(inject);
     parseAndDisplay(decoded);
   }
+});
+
+// 差し替え用スクリプト出力
+genScriptBtn.addEventListener("click", () => {
+  const { html, css, js } = latestFiles;
+  if (!html || !css || !js) {
+    scriptBox.innerText = "構築ファイルが不足しています。";
+    return;
+  }
+
+  const script = `
+===== index.html =====
+${html}
+
+===== style.css =====
+${css}
+
+===== main.js =====
+${js}
+  `.trim();
+
+  scriptBox.innerText = script;
 });
