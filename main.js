@@ -23,4 +23,16 @@ function sendToMemory(data) {
     .then(res => {
       document.getElementById("status").textContent = "Memoryへ中継完了";
     })
-   
+    .catch(err => {
+      document.getElementById("status").textContent = "Memory送信失敗";
+      console.error(err);
+    });
+}
+
+const injected = getInjectData();
+if (injected) {
+  updateUI(injected);
+  sendToMemory(injected);
+} else {
+  document.getElementById("status").textContent = "構築データがありません";
+}
