@@ -3,36 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Raven│Command v1.5</title>
+  <title>Raven│Command v1.3</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <h1>Raven│Command</h1>
 
-  <textarea id="json_input" placeholder="進化JSONまたは構築ログを貼り付けてください"></textarea>
-  <button id="load_button">読み込む</button>
-
-  <h3>展開結果</h3>
-  <pre id="output"></pre>
-
-  <hr />
-  <h3>Forge構築ログ（受信パネル）</h3>
-  <pre id="forge_log"></pre>
-
-  <hr />
-  <h3>構築ファイル確認（差し替え候補）</h3>
-  <div id="code_files">
-    <h4>index.html</h4>
-    <pre id="code_html"></pre>
-    <h4>style.css</h4>
-    <pre id="code_css"></pre>
-    <h4>main.js</h4>
-    <pre id="code_js"></pre>
+  <div id="log_area">
+    <h3>受信ログ</h3>
+    <pre id="inject_log">構築データは未受信</pre>
   </div>
-
-  <button id="generate_script">差し替えコードを生成</button>
-  <h4>コピー用コード</h4>
-  <pre id="replace_script"></pre>
 
   <script src="main.js"></script>
 </body>
